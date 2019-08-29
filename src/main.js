@@ -5,6 +5,14 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/style.scss'
+import 'vue2-animate/dist/vue2-animate.min.css'
+// import './assets/font-awesome.min.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(fab);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 window.ResizeSensor = ResizeSensor
 
@@ -12,7 +20,7 @@ Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
 	load: {
 		key: 'AIzaSyCkXI6aEAaNQZUGDLORJ-vvA2SWYQ_eIew',
-		libraries: 'places', // This is required if you use the Autocomplete plugin
+		libraries: 'places,drawing,visualization', // This is required if you use the Autocomplete plugin
 		// OR: libraries: 'places,drawing'
 		// OR: libraries: 'places,drawing,visualization'
 		// (as you require)

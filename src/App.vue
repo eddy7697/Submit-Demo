@@ -40,9 +40,25 @@
 					@click="testAc"
 				/>
 			</GmapMap>
-			<!-- <div id="map" ref="map">
+			<div id="panel">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<button class="open-form-btn" @click="infoPanelVisible = !infoPanelVisible">
+								
+							</button>
+							<transition
+								name="fadeIn"
+								enter-active-class="fadeInDown"
+								leave-active-class="fadeOutUp">
+								<div class="info-form" v-if="infoPanelVisible">
 
-			</div> -->
+								</div>
+							</transition>
+						</div>
+					</div>
+				</div>
+			</div>
 			<HelloWorld msg="Welcome to Your Vue.js App" />
 		</section>
 		<section id="site-footer">
@@ -87,6 +103,7 @@
 		},
 		data() {
 			return {
+				infoPanelVisible: false,
 				windowHeight: 0,
 				headerHeight: 0,
 				footerHeight: 0,
@@ -96,6 +113,10 @@
 		created() {
 			this.$nextTick(() => {
 				this.initMap()
+
+				setTimeout(() => {
+					this.infoPanelVisible = true
+				}, 1000);
 			})
 		},
 		computed: {
