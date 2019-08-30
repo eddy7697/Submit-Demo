@@ -5,11 +5,17 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/style.scss'
-import 'vue2-animate/dist/vue2-animate.min.css'
 // import './assets/font-awesome.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import ElementUI from 'element-ui'
+// import 'element-ui/lib/theme-chalk/index.css';
+import lang from 'element-ui/lib/locale/lang/zh-TW'
+import locale from 'element-ui/lib/locale'  
+
+Vue.use(ElementUI);
+locale.use(lang)
 
 library.add(fab);
 Vue.component('font-awesome-icon', FontAwesomeIcon)

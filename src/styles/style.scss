@@ -1,7 +1,36 @@
+$animationDuration: 0.5s; 
+%fit-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* 改变主题色变量 */
+$--color-primary: #435C70;
+$--color-primary: #127A85;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+@import "./common.scss";
+@import "./scss/font-awesome.scss";
+@import "~vue2-animate/src/sass/vue2-animate.scss";
+
 * {
     position: relative;
     color: #636b6f;
     font-family: 'Nunito', sans-serif, Microsoft JhengHei;
+}
+
+.gmnoprint {
+    display: none;
+}
+
+.fit-box {
+    @extend %fit-box;
 }
 
 ul {
@@ -23,6 +52,28 @@ ul {
     }
 }
 
+.panel {
+    margin-top: 20px;
+
+    .panel-title {
+        font-weight: 700;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: #ccc solid thin;
+    }
+    .panel-content {
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+
+            .source-region, .item {
+                flex: 0 0 33.333333333%;
+                margin: 0 0 10px 0;
+            }
+        }
+    }
+}
 
 #app {
     position: absolute;
@@ -33,31 +84,97 @@ ul {
 
     #site-content {
 
+        #condition-panel {
+            @extend %fit-box;
+            padding: 15px 25px;
+            right: initial;
+            width: 450px;
+            background-color: #fff;
+            box-shadow: 2px 2px 12px -2px #636b6f;
+        }
         #map {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+            transition: all .5s;
+
+            &.show-panel {
+                left: 450px;
+            }
         }
-        #panel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba($color: #000000, $alpha: .5);
+        #bg-mask {
+            @extend %fit-box;
+            background-color: rgba($color: #000000, $alpha: .9);
+        }
+        #methods-bar {
+            @extend %fit-box;
+            bottom: initial;
+            
+            .open-form-btn {
+                height: 20px;
+                width: 70px;
+                margin-top: 10px;
+                background-color: #fff;
+                border: none;
+                overflow: hidden;
+                box-shadow: 2px 2px 12px -2px rgba($color: #000000, $alpha: .5);
+                
+                i {
+                    position: absolute;
+                    top: 0px;
+                    left: 50%;
+                    transform: translateX(-50%);
+
+                    &.fa-sort-asc {
+                        top: 6px;
+                    }
+                }
+            }
+        }
+        #info-panel {
+            @extend %fit-box;
 
             .info-form {
-                margin-top: 15px;
-                padding: 15px;
+                margin-top: 40px;
+                padding: 20px 25px;
                 background-color: #fff;
-                width: fit-content;
+                width: 550px;
                 height: auto;
-            }
-            .open-form-btn {
-                margin-top: 15px;
-                background-color: #fff;
+                border-radius: 3px;
+                box-shadow: 2px 2px 12px -2px rgba($color: #000000, $alpha: .5);
+
+                h2 {
+                    font-size: 24px;
+                    font-weight: 700;
+                    margin-bottom: 15px;
+                }
+                table {
+                    table-layout: fixed;
+                    tr {
+                        td {
+                            vertical-align: middle;
+                            padding: 7.5px 0;
+
+                            label {
+                                margin-right: 30px;
+                                margin-bottom: 0;
+
+                                &:last-child {
+                                    margin-right: 0;
+                                }
+                            }
+                            input[type=text], input[type=email], select {
+                                height: 22px;
+                            }
+                        }
+                    }
+                }
+                .info-submit-btn {
+                    padding-left: 30px;
+                    padding-right: 30px;
+                }
             }
         }
     }
@@ -71,7 +188,7 @@ ul {
         .header-logo {
             padding: 10px 0;
             img {
-                height: 100px;
+                max-height: 80px;
                 max-width: 100%;
             }
         }

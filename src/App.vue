@@ -32,7 +32,8 @@
 				:center="center"
 				:zoom="16"
 				map-type-id="terrain"
-				id="map" >
+				id="map" 
+				:class="{'show-panel': step == 2}">
 				<GmapMarker
 					:position="{lat:25.0627207, lng:121.5248709}"
 					:clickable="true"
@@ -40,33 +41,55 @@
 					@click="testAc"
 				/>
 			</GmapMap>
-			<div id="panel">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<button class="open-form-btn" @click="infoPanelVisible = !infoPanelVisible">
-								
-							</button>
-							<transition
-								name="fadeIn"
-								enter-active-class="fadeInDown"
-								leave-active-class="fadeOutUp">
-								<div class="info-form" v-if="infoPanelVisible">
 
+			<transition
+				name="fadeIn"
+				enter-active-class="fadeInDown"
+				leave-active-class="fadeOutUp">
+				<div class="fit-box" v-if="step == 1">
+					<transition
+						name="fadeIn"
+						enter-active-class="fadeIn"
+						leave-active-class="fadeOut">
+						<div id="bg-mask" v-if="infoPanelVisible"></div>
+					</transition>
+								
+					<transition
+						name="fadeIn"
+						enter-active-class="fadeInDown"
+						leave-active-class="fadeOutUp">
+						<InfoForm v-if="infoPanelVisible" v-on:goStep="goStep($event)"/>
+					</transition>
+					
+					<div id="methods-bar">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<button class="open-form-btn" @click="infoPanelVisible = !infoPanelVisible">
+										<i class="fa fa-sort-asc" aria-hidden="true" v-if="infoPanelVisible"></i>
+										<i class="fa fa-sort-desc" aria-hidden="true" v-else></i>
+									</button>			
 								</div>
-							</transition>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<HelloWorld msg="Welcome to Your Vue.js App" />
+				
+			</transition>
+			<transition
+				name="fadeIn"
+				enter-active-class="fadeInLeft"
+				leave-active-class="fadeOutRight">
+				<ConditionPanel v-if="step == 2" />
+			</transition>
+			
+			
+
 		</section>
 		<section id="site-footer">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-2">
-
-					</div>
+					<div class="col-md-2" />
 					<div class="col-md-8 copyright">
 						<img src="./assets/com-logo.png" height="24" alt="">
 						&nbsp;Copyright &#9400; Master Concept Technology. BHD. Taiwan Branch all right reserved.
@@ -81,14 +104,15 @@
 </template>
 
 <script>
-	import HelloWorld from './components/HelloWorld.vue'
+	import InfoForm from './components/InfoForm.vue'
+	import ConditionPanel from './components/ConditionPanel.vue'
 	import $ from 'jquery'
 	import ResizeSensor from 'css-element-queries/src/ResizeSensor'
 
 	export default {
 		name: 'app',
 		components: {
-			HelloWorld
+			InfoForm, ConditionPanel
 		},
 		mounted() {
 			new ResizeSensor($('#site-header'), () => { 
@@ -104,10 +128,11 @@
 		data() {
 			return {
 				infoPanelVisible: false,
+				step: 2,
 				windowHeight: 0,
 				headerHeight: 0,
 				footerHeight: 0,
-				center: { lat:10, lng:10 }
+				center: { lat:25.0627207, lng:121.5248709 }
 			}
 		},
 		created() {
@@ -115,7 +140,7 @@
 				this.initMap()
 
 				setTimeout(() => {
-					this.infoPanelVisible = true
+					this.infoPanelVisible = false
 				}, 1000);
 			})
 		},
@@ -136,8 +161,10 @@
 					}
 				});
 			},
+			goStep(step) {
+				this.step = step
+			},
 			testAc() {
-				console.log(arguments)
 			}
 		}
 	}
