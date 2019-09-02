@@ -128,7 +128,7 @@
 		data() {
 			return {
 				infoPanelVisible: false,
-				step: 2,
+				step: 1,
 				windowHeight: 0,
 				headerHeight: 0,
 				footerHeight: 0,

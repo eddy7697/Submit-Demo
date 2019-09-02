@@ -25,7 +25,7 @@ window.ResizeSensor = ResizeSensor
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
 	load: {
-		key: 'AIzaSyCkXI6aEAaNQZUGDLORJ-vvA2SWYQ_eIew',
+		key: 'AIzaSyDZCVF4qKbZCvWsOY2lb67xwQ4T8kU5gNc',
 		libraries: 'places,drawing,visualization', // This is required if you use the Autocomplete plugin
 		// OR: libraries: 'places,drawing'
 		// OR: libraries: 'places,drawing,visualization'
