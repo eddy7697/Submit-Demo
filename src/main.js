@@ -13,6 +13,7 @@ import ElementUI from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css';
 import lang from 'element-ui/lib/locale/lang/zh-TW'
 import locale from 'element-ui/lib/locale'  
+import axios from "axios";
 
 Vue.use(ElementUI);
 locale.use(lang)
@@ -21,6 +22,7 @@ library.add(fab);
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 window.ResizeSensor = ResizeSensor
+window.axios = axios
 
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {

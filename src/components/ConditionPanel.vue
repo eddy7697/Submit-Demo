@@ -48,6 +48,16 @@
                 exceptList: []
             }
         },
+        watch: {
+            turnover(val) {
+                this.changeTurnover(val)
+            }
+        },
+        methods: {
+            changeTurnover(val) {
+                this.$emit('changeTurnover', val)
+            }
+        },
     }
 </script>
 
