@@ -11,7 +11,7 @@
 					<div class="col-md-9 header-right-side">
 						<ul class="header-menu">
 							<li><a href="#">重製資料</a></li>
-							<li><a href="#">成本計算工具</a></li>
+							<li><a href="#" @click="caculatorVisiable = !caculatorVisiable">成本計算工具</a></li>
 							<li><a href="#" @click="getPosition">聯絡諮詢</a></li>
 						</ul>
 						<div class="user-info-bar">
@@ -28,7 +28,7 @@
 			</div>
 		</section>
 		<section id="site-content" :style="contentHeight">
-			<GmapMap :center="center" :zoom="zoomLevel" map-type-id="terrain" id="map" ref="mapRef"
+			<GmapMap :center="center" :zoom="zoomLevel" map-type-id="terrain" id="map" ref="mapRef" :clickable="false"
 				:class="{'show-panel': step == 2}">
 				<gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
 					@closeclick="infoWinOpen=false" />
@@ -63,9 +63,20 @@
 
 			</transition>
 			<transition name="fadeIn" enter-active-class="fadeInLeft" leave-active-class="fadeOutRight">
-				<ConditionPanel v-if="step == 2" @changeTurnover="changeTurnover($event)" />
+				<ConditionPanel 
+					v-if="step == 2" 
+					@clearPosition="chosenPosition = null"
+					@changeTurnover="changeTurnover($event)" 
+					:chosenPosition="chosenPosition"/>
 			</transition>
 
+			<transition name="fadeIn" enter-active-class="fadeInDown" leave-active-class="fadeOutUp">
+				<CostCaculator 
+					:chosenPosition="chosenPosition" 
+					:turnover="turnover"
+					v-if="caculatorVisiable && chosenPosition != null" 
+					@toggleVisiable="caculatorVisiable = $event"/>
+			</transition>
 
 
 		</section>
@@ -90,6 +101,7 @@
 	import dummyData from './dummy/data.js'
 	import InfoForm from './components/InfoForm.vue'
 	import ConditionPanel from './components/ConditionPanel.vue'
+	import CostCaculator from './components/CostCaculator'
 	import $ from 'jquery'
 	import ResizeSensor from 'css-element-queries/src/ResizeSensor'
 	import axios from 'axios'
@@ -99,7 +111,8 @@
 		name: 'app',
 		components: {
 			InfoForm,
-			ConditionPanel
+			ConditionPanel,
+			CostCaculator
 		},
 		mounted() {
 			new ResizeSensor($('#site-header'), () => {
@@ -117,6 +130,7 @@
 			return {
 				infoWinOpen: false,
 				infoWindowPos: null,
+				caculatorVisiable: true,
 				infoOptions: {
 					content: '',
 					//optional: offset infowindow so it visually sits nicely on top of our marker
@@ -137,6 +151,7 @@
 					lng: 121.5248709
 				},
 				allLocation: allLocation,
+                chosenPosition: null
 			}
 		},
 		created() {
@@ -220,45 +235,48 @@
 						lng: lng
 					}
 					this.infoOptions.content = `
-					<h2>${arg.label}</h2>
-					<hr>
-					<table>
-						<tr>
-							<td>租屋地點</td>
-							<td>${arg.where}</td>
-						</tr>
-						<tr>
-							<td>物件連結</td>
-							<td><a target="_blank" href="${arg.link}">${arg.link}</a></td>
-						</tr>
-						<tr>
-							<td>租金</td>
-							<td>${arg.monthlyRent}</td>
-						</tr>
-						<tr>
-							<td>預計營業額</td>
-							<td>${arg.predRev}</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<a target="_blank" href="http://maps.google.com/maps?q=&layer=c&cbll=31.335198,-89.287204&cbp=11,0,0,0,0" class="street-view-btn">點我看街景</a>
-							</td>
+						<h2>${arg.label}</h2>
+						<hr>
+						<table>
+							<tr>
+								<td>租屋地點</td>
+								<td>${arg.where}</td>
+							</tr>
+							<tr>
+								<td>物件連結</td>
+								<td><a target="_blank" href="${arg.link}">${arg.link}</a></td>
+							</tr>
+							<tr>
+								<td>租金</td>
+								<td>${arg.monthlyRent}</td>
+							</tr>
+							<tr>
+								<td>預計營業額</td>
+								<td>${arg.predRev}</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<a target="_blank" href="http://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}&cbp=11,0,0,0,0" class="street-view-btn">點我看街景</a>
+								</td>
 
-						</tr>
-					</table>
-					<button id="save-position" position-id="${arguments[1]}">
-						儲存<br>地點
-					</button>
-					`
+							</tr>
+						</table>
+						<button id="save-position" position-id="${arguments[1]}">
+							儲存<br>地點
+						</button>
+						`
 
 					this.infoWinOpen = true;
 					
 					this.$nextTick(() => {
 						$('#save-position').on('click', () => {
-							console.log($('#save-position').attr('position-id'))
+							this.selectPosition(arg)
 						})
 					})
 				})
+			},
+			selectPosition(item) {
+				this.chosenPosition = item
 			},
 			testAc() {}
 		}

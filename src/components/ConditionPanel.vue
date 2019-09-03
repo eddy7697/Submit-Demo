@@ -31,6 +31,28 @@
                 </el-checkbox-group>
             </div>
         </div>
+
+        <div class="panel" v-if="chosenPosition">
+            <div class="panel-title">
+                選點地址
+            </div>
+            <div class="panel-content" style="padding-top: 15px;">
+                {{chosenPosition.label}} <a class="clear-btn" style="cursor: pointer" @click="clearPosition">(解除鎖定)</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">
+                備註填寫
+            </div>
+            <div class="panel-content" style="padding-top: 15px;">
+                <el-input type="textarea" placeholder="請填入備註內容..." :rows="7"/>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;" v-if="chosenPosition">
+            <el-button type="primary" size="mini">送出運算</el-button>
+        </div>
     </div>
 </template>
 
@@ -39,13 +61,14 @@
     export default {
         name: 'ConditionPanel',
         props: {
-            msg: String
+            msg: String,
+            chosenPosition: Object
         },
         mixins: [helper],
         data() {
             return {
                 turnover: 10000,
-                exceptList: []
+                exceptList: [],
             }
         },
         watch: {
@@ -56,11 +79,18 @@
         methods: {
             changeTurnover(val) {
                 this.$emit('changeTurnover', val)
+            },
+            clearPosition() {
+                this.$emit('clearPosition')
             }
         },
     }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss">
+.clear-btn {
+    color: #ccc;
+    font-size: 14px;
+}
 </style>
