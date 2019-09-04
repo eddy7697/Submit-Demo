@@ -9,7 +9,7 @@
                     預估營業額<span style="font-size: 12px; color: #ccc">(最高金額限制 NTD 1,000,000)</span>
                     <div class="row">
                         <div class="col-8">
-                            <el-slider v-model="turnover" :show-tooltip="false" :min="0" :max="1000000" :step="10000"></el-slider>        
+                            <el-slider v-if="!isLoading" v-model="turnover" :show-tooltip="false" :min="0" :max="1000000" :step="10000"></el-slider>        
                         </div>
                         <div class="col-4 middle-right" style="font-weight: 700">
                             NTD {{formatNumber(turnover)}}
@@ -51,7 +51,7 @@
         </div>
 
         <div style="text-align: center; margin-top: 30px;" v-if="chosenPosition">
-            <el-button type="primary" size="mini">送出運算</el-button>
+            <el-button type="primary" size="mini" @click="goStep">送出運算</el-button>
         </div>
     </div>
 </template>
@@ -62,7 +62,8 @@
         name: 'ConditionPanel',
         props: {
             msg: String,
-            chosenPosition: Object
+            chosenPosition: Object,
+            isLoading: Boolean
         },
         mixins: [helper],
         data() {
@@ -82,6 +83,9 @@
             },
             clearPosition() {
                 this.$emit('clearPosition')
+            },
+            goStep() {
+                this.$emit('goStep', 3)
             }
         },
     }

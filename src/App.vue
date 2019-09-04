@@ -67,6 +67,8 @@
 					v-if="step == 2" 
 					@clearPosition="chosenPosition = null"
 					@changeTurnover="changeTurnover($event)" 
+					v-on:goStep="goStep($event)"
+					:isLoading='isLoading'
 					:chosenPosition="chosenPosition"/>
 			</transition>
 
@@ -74,11 +76,21 @@
 				<CostCaculator 
 					:chosenPosition="chosenPosition" 
 					:turnover="turnover"
-					v-if="caculatorVisiable && chosenPosition != null" 
+					v-if="caculatorVisiable && chosenPosition != null && step == 2" 
 					@toggleVisiable="caculatorVisiable = $event"/>
 			</transition>
 
-
+			<transition name="fadeIn" enter-active-class="fadeIn" leave-active-class="fadeOut">
+				<ResultPanel v-if="step == 3" v-on:goStep="goStep($event)"/>
+			</transition>
+			
+			<div class="loading-mask fit-box" v-if="isLoading">
+				<div style="width: 200px; text-align: center">
+					<img style="width: 200px;" src="./assets/logo2.png" alt="">
+					<br>
+					<img style="width: 75px" src="./assets/loading-bar.svg" alt="">
+				</div>
+			</div>
 		</section>
 		<section id="site-footer">
 			<div class="container-fluid">
@@ -102,6 +114,7 @@
 	import InfoForm from './components/InfoForm.vue'
 	import ConditionPanel from './components/ConditionPanel.vue'
 	import CostCaculator from './components/CostCaculator'
+	import ResultPanel from './components/ResultPanel'
 	import $ from 'jquery'
 	import ResizeSensor from 'css-element-queries/src/ResizeSensor'
 	import axios from 'axios'
@@ -112,7 +125,8 @@
 		components: {
 			InfoForm,
 			ConditionPanel,
-			CostCaculator
+			CostCaculator,
+			ResultPanel
 		},
 		mounted() {
 			new ResizeSensor($('#site-header'), () => {
@@ -128,6 +142,7 @@
 		data() {
 			let allLocation = dummyData.data()
 			return {
+				isLoading: true,
 				infoWinOpen: false,
 				infoWindowPos: null,
 				caculatorVisiable: true,
@@ -140,7 +155,7 @@
 					}
 				},
 				infoPanelVisible: false,
-				step: 2,
+				step: 1,
 				zoomLevel: 16,
 				turnover: 10000,
 				windowHeight: 0,
@@ -159,6 +174,7 @@
 				this.initMap()
 
 				setTimeout(() => {
+					this.isLoading = false
 					this.infoPanelVisible = false
 				}, 1000);
 			})
@@ -190,7 +206,12 @@
 				});
 			},
 			goStep(step) {
-				this.step = step
+				this.isLoading = true
+
+				setTimeout(() => {
+					this.isLoading = false
+					this.step = step	
+				}, Math.random() * 1000 + 500)
 			},
 			getPosition() {
 				let allData = dummyData.data()
@@ -284,6 +305,13 @@
 </script>
 
 <style lang="scss">
+.loading-mask {
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 909;
+}
 .gm-style-iw {
 	padding-bottom: 10px !important;
 

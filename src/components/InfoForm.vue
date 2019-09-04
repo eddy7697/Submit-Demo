@@ -43,14 +43,16 @@
                                     <tr>
                                         <td style="width: 110px;">依縣市選擇</td>
                                         <td>
-                                            <select name="" id="" style="width: 110px; margin-right: 25px;">
-                                                
+                                            <select v-model="county" style="width: 110px; margin-right: 25px;">
+                                                <option :value="null">== 請選擇縣市 ==</option>
+                                                <option v-for="(item, index) in counties" :key="index" :value="item">{{item}}</option>
                                             </select>
                                         </td>
                                         <td style="width: 110px;">依地區選擇</td>
                                         <td>
-                                            <select name="" id="" style="width: 110px; margin-right: 25px;">
-                                                
+                                            <select v-model="district" style="width: 110px; margin-right: 25px;">
+                                                <option :value="null">== 請選擇地區 ==</option>
+                                                <option v-for="(item, index) in computedDis" :key="index" :value="item">{{item}}</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -78,7 +80,12 @@
                                     <tr>
                                         <td style="width: 110px;">店型選擇</td>
                                         <td>
-                                            <select name="" id="" style="width: 200px; margin-right: 10px;"></select>
+                                            <select style="width: 200px; margin-right: 10px;">
+                                                <option :value="null">== 請選擇店型 ==</option>
+                                                <option value="好鄰便利店型">好鄰便利店型</option>
+                                                <option value="國民樂活店型">國民樂活店型</option>
+                                                <option value="都會全能店型">都會全能店型</option>
+                                            </select>
                                             (<a href="#">店型參考請點我</a>)
                                         </td>
                                     </tr>
@@ -86,9 +93,15 @@
                                         <td style="width: 110px;">預計營業時間</td>
                                         <td colspan="3">
                                             <label>
-                                                <select name="" id="" style="width: 50px;"></select>
+                                                <select name="" id="" style="width: 70px;" v-model="startTime">
+                                                    <option :value="null" disabled>-開始-</option>
+                                                    <option v-for="(item, index) in times" :key="index" :value="item">{{item}}</option>
+                                                </select>
                                                 &nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;
-                                                <select name="" id="" style="width: 50px;"></select>
+                                                <select name="" id="" style="width: 70px;" v-model="endTime">
+                                                    <option :value="null" disabled>-結束-</option>
+                                                    <option v-for="(item, index) in times" :key="index" :value="item">{{item}}</option>
+                                                </select>
                                             </label>
                                         </td>
                                     </tr>
@@ -119,7 +132,7 @@
                             </div>
                         </div>
                         
-                        <div style="text-align: center; padding: 15px 0;">
+                        <div style="text-align: center; padding: 15px 0 0;">
                             <button class="btn btn-info info-submit-btn" @click="goStep">
                                 送出
                             </button>
@@ -132,14 +145,39 @@
 </template>
 
 <script>
+    import city from './../mixins/cityData'
+    import dayjs from 'dayjs'
     export default {
         name: 'INfoFrom',
         props: {
             msg: String
         },
+        mixins: [city],
         data() {
+            let start = dayjs('2019-01-01 00:00')
+            let times = new Array
+
+            for (let i = 0; i < 49; i++) {
+                times.push(start.add(i * 30, 'minutes').format('HH:mm'))
+                
+            }
             return {
-                exceptList: []
+                exceptList: [],
+                county: null,
+                district: null,
+                times: times,
+                startTime: null,
+                endTime: null
+            }
+        },
+        computed: {
+            computedDis() {
+                let index = this.counties.indexOf(this.county)
+
+                if (index == -1) {
+                    return []
+                }
+                return this.districts[index][0]
             }
         },
         methods: {
