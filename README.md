@@ -1,4 +1,4 @@
-# submit-demo
+# Summit-demo
 
 ## Project setup
 ```
