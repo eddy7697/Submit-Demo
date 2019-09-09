@@ -192,7 +192,10 @@
 					}
 				})
 
-				return _.compact(filted)
+				if (this.step == 2) {
+					return _.compact(filted)
+				}
+				return []
 			}
 		},
 		methods: {
