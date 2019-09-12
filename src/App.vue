@@ -2,7 +2,7 @@
 	<div id="app">
 		<section id="site-header">
 			<div class="container">
-				<div class="row">
+				<div class="row" id="header-menu">
 					<div class="col-md-3">
 						<div class="header-logo">
 							<img src="./assets/logo-white.png" alt="">
@@ -175,7 +175,7 @@
 
 				setTimeout(() => {
 					this.isLoading = false
-					this.infoPanelVisible = false
+					this.infoPanelVisible = true
 				}, 1000);
 			})
 		},

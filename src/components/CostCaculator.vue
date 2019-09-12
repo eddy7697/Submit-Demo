@@ -58,17 +58,17 @@
 
         <div class="final-cost">
             <div class="col">
-                <strong>NTD {{formatNumber(turnover)}}</strong> 
+                <strong>NTD {{formatNumber(chosenPosition.predRev)}}</strong> 
                 <br>
                 預估營業額
             </div>
             <div class="col">
-                <strong>NTD {{formatNumber(allCost)}}</strong> 
+                <strong>NTD {{formatNumber(allCost + parsedPosition.monthlyRent)}}</strong> 
                 <br>
                 預估成本
             </div>
             <div class="col">
-                <span style="color: #afd560"><strong>NTD {{formatNumber(turnover - allCost)}}</strong></span>
+                <span style="color: #afd560"><strong>NTD {{formatNumber(chosenPosition.predRev - allCost - parsedPosition.monthlyRent)}}</strong></span>
                 <br>
                 預估利潤
             </div>

@@ -1,8 +1,8 @@
 <template>
-    <div id="condition-panel">
+    <vue-custom-scrollbar id="condition-panel">
         <div class="panel">
             <div class="panel-title">
-                營業條件
+                期望營業額
             </div>
             <div class="panel-content" style="padding-top: 15px;">
                 <div>
@@ -46,18 +46,19 @@
                 備註填寫
             </div>
             <div class="panel-content" style="padding-top: 15px;">
-                <el-input type="textarea" placeholder="請填入備註內容..." :rows="7"/>
+                <el-input type="textarea" placeholder="請填入備註內容..." :rows="7" v-model="panelContent"/>
             </div>
         </div>
 
         <div style="text-align: center; margin-top: 30px;" v-if="chosenPosition">
             <el-button type="primary" size="mini" @click="goStep">送出運算</el-button>
         </div>
-    </div>
+    </vue-custom-scrollbar>
 </template>
 
 <script>
     import helper from '../mixins/helper.js'
+    import vueCustomScrollbar from 'vue-custom-scrollbar'
     export default {
         name: 'ConditionPanel',
         props: {
@@ -65,11 +66,13 @@
             chosenPosition: Object,
             isLoading: Boolean
         },
+        components: {vueCustomScrollbar},
         mixins: [helper],
         data() {
             return {
                 turnover: 10000,
                 exceptList: [],
+                panelContent: null
             }
         },
         watch: {

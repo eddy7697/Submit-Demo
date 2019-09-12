@@ -3,44 +3,62 @@
         <div id="bg-mask"></div>
         <vue-custom-scrollbar id="result-panel" class="result-panel" :setting="settings">
             <div class="container-fluid">
-                <div class="row">
+                <div class="row shorter-row">
                     <div class="col-12 header" style="text-align: center">
                         <img src="../assets/logo-black.png" alt="最佳拓點預測報告">
-                    </div>
-                    <div class="col-6" style="font-size: 10px">
                         <h2>最佳拓點預測報告</h2>
                     </div>
+                    <div class="col-6" style="font-size: 10px">
+                        <p>專案業務：王大明 / 0912-345678</p>
+                    </div>
                     <div class="col-6" style="font-size: 10px; text-align: right">
-                        <p>專案業務：王大明 / 0912-345678&nbsp;&nbsp;健檢日期：2019/09/20</p>
+                        <p>&nbsp;&nbsp;健檢日期：2019/09/24</p>
                     </div>
-                    <div class="col-12">
-                        <hr>
-                        <p>加盟主姓名：</p>
-                        <p>加盟主電話：</p>
-                        <p>加盟主信箱：</p>
-                        <hr>
+                    <div class="col-12" style="margin-bottom: 20px">
+                        <div class="result-panel-info">
+                            <h3>加盟夥伴基本資料</h3>
+                            <p>加盟夥伴姓名：<span class="info">張三</span></p>
+                            <p>加盟夥伴電話：<span class="info">0933123123</span></p>
+                            <p>加盟夥伴信箱：<span class="info">im3@gmail.com</span></p>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <p>店鋪位置：</p>
-                        <p>物件來源：</p>
-                        <p>店型選擇：</p>
-                        <p>推薦營業時數：</p>
-                        <p>推薦餐型：</p>
-                        <p>預計營業額：</p>
+                    <div class="col-8" style="margin-bottom: 20px">
+                        <div class="result-panel-info" style="padding: 5px 0;">
+                            <h3 style="padding-left: 10px;">營業條件與成本</h3>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p>店鋪位置：<span class="info">台北市中山區中山北路二段115巷3弄4號</span></p>
+                                        <p>物件來源：<span class="info">西利雅房仲網</span></p>
+                                        <p>店型選擇：<span class="info">好鄰便利店</span></p>
+                                        <p>預計營業時數：<span class="info">6 - 12</span></p>
+                                        <p>預計餐型：<span class="info">早餐 盤餐</span></p>
+                                        <p>預測營業額：<span class="info">561,000</span></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>預計租金：<span class="info">30,000</span></p>
+                                        <p>預計人事成本：<span class="info">120,000</span></p>
+                                        <p>預計原物料成本：<span class="info">220,000</span></p>
+                                        <p>預計其他成本：<span class="info">30,000</span></p>
+                                        <p>預計營業額 - 四大成本：<span class="info">161,000</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <p>最佳營業配置：</p>
-                        <p>推薦店型：</p>
-                        <p>推薦營業時間：</p>
-                        <p>推薦餐型：</p>
-                        <p>預計最佳營業額</p>
-                    </div>
-                    <div class="col-4">
-                        <p>預計租金：</p>
-                        <p>預測人事成本：</p>
-                        <p>預測原物料成本：</p>
-                        <p>預測其他成本：</p>
-                        <p>預測營業額：</p>
+                    <div class="col-4" style="margin-bottom: 20px">
+                        <div class="result-panel-info">
+                            <h3>推薦：預測結果最佳化</h3>
+                            <div>
+                                <p>最佳營業配置</p>
+                                <p>推薦店型：<span class="info">好鄰便利店</span></p>
+                                <p>推薦營業時間：<span class="info">6 - 14</span></p>
+                                <p>推薦餐型：<span class="info">早餐 盤餐 午餐</span></p>
+                                <p>預測最佳營業額：<br><span class="info result">NTD 660,000</span></p>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="col-12">
                         <hr>
@@ -80,24 +98,24 @@
         data() {
             return {
                 barChartData: {
-                    labels: ['本店', '店面2', '店面3', '店面4'],
+                    labels: ['本店'],
                     datasets: [{
                         label: '預計月營收減去四大成本',
                         backgroundColor: '#6d9eeb',
                         borderColor: '#6d9eeb',
                         borderWidth: 1,
-                        data: [12, 36, 10, 28]
+                        data: [16.1]
                     }, {
                         label: '預計月營收',
                         backgroundColor: '#1c4587',
                         borderColor: '#1c4587',
                         borderWidth: 1,
-                        data: [36, 24, 32, 53]
+                        data: [56.1]
                     }]
                 },
                 pirChartData: {
                     datasets: [{
-                        data: [5, 7, 10, 2, 12],
+                        data: [3, 12, 22, 3, 16.1],
                         backgroundColor: [
                             '#4285f4',
                             '#db4437',
@@ -183,6 +201,29 @@
             padding-top: 15px;
             padding-bottom: 15px;
         }
+        .result-panel-info {
+            border-radius: 5px;
+            border: #6198b1 solid thin;
+            padding: 5px 10px;
+            height: 100%;
+            color: #6198b1;
+
+            h3 {
+                font-weight: 600;
+                font-size: 20px;
+                margin: 8px 0;
+            }
+            span.info {
+                font-weight: 900;
+
+                &.result {
+                    display: block;
+                    text-align: right;
+                    font-size: 26px;
+                    color: #f6af79;
+                }
+            }
+        }
         .result-panel-footer {
             padding: 20px;
             background-color: #dddddd;
@@ -192,6 +233,15 @@
 
             .el-button {
                 flex: 0 0 20%;
+            }
+        }
+        .shorter-row {
+            margin-left: -10px;
+            margin-right: -10px;
+
+            [class*="col-"] {
+                padding-left: 10px;
+                padding-right: 10px;
             }
         }
     }

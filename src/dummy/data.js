@@ -36,7 +36,7 @@ export default {
             "link": "https://rent.591.com.tw/rent-detail-8047974.html ",
             "label": "自租~中山北路巷弄小店面(可增大)",
             "monthlyRent": "30,000",
-            "predRev": 168000,
+            "predRev": 561000,
             "where": "中山區-中山北路二段115巷3弄4號",
             "lat": 25.0612340,
             "lng": 121.5235530
